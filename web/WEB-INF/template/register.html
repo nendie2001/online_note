@@ -1,0 +1,83 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Bean</title>
+    <script src="/static/lib/sweetalert.min.js"></script>
+    <script src="/static/lib/component.js"></script>
+    <script src="/static/lib/vue.min.js"></script>
+    <script src="/static/lib/axios.min.js"></script>
+    <script src="/static/lib/jquery.min.js"></script>
+    <script src="/static/lib/gua.js"></script>
+    <script src="/static/js/register.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="/static/css/index.css">
+    <!-- 引入组件库 -->
+    <script src="/static/lib/index.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body style="margin: 0;">
+    <el-container>
+        <el-aside style="width: 100%;">
+            <el-menu class="el-menu-demo"
+                     mode="horizontal"
+                     background-color="#409EFF"
+                     text-color="#fff"
+                     active-text-color="#ffd04b">
+                <el-menu-item index="1" @Click="toIndex">首页</el-menu-item>
+                <el-menu-item index="2" @Click="toLogin">登录</el-menu-item>
+            </el-menu>
+        </el-aside>
+        <el-main style="height: 100vh;">
+            <div id="id-login-main">
+                <span class="title">注册</span>
+                <div id="id-register-form" style="margin-bottom: 0px;">
+                    <div class="input-block">
+                        <el-input v-model="username" placeholder="请输入用户名" name="username"></el-input>
+                        <div class="input-block" v-for="valid in usernameValids">
+                            <span class="input-error-notice" v-if="!valid.condition">{{valid.message}}</span>
+                        </div>
+                        <div class="input-block">
+                            <el-input placeholder="请输入密码" v-model="password" show-password name="password"></el-input>
+                        </div>
+                        <div class="input-block" v-for="valid in passwordValids">
+                            <span class="input-error-notice" v-if="!valid.condition">{{valid.message}}</span>
+                        </div>
+                        <div class="input-block">
+                            <el-input placeholder="请再次输入密码" v-model="password2" show-password name="password2"></el-input>
+                        </div>
+                        <div class="input-block" v-if="!passwordIsSame">
+                            <span class="input-error-notice">两次输入不一致</span>
+                        </div>
+                        <div class="input-block">
+                            <el-row :gutter="20">
+                                <el-col :span="15">
+                                    <div @keyup.enter="registerSubmit" class="grid-content bg-purple">
+                                        <el-input v-model="code" placeholder="请输入验证码"></el-input>
+                                        <div class="input-block" v-for="valid in codeValids">
+                                            <span class="input-error-notice" v-if="!valid.condition">{{valid.message}}</span>
+                                        </div>
+                                    </div>
+                                </el-col>
+                                <el-col :span="5">
+                                    <div class="grid-content bg-purple">
+                                        <div style="width: 100px;height: 38px;position: relative;">
+                                            <img :src=refreshUrl v-on:click="refreshCode" id="id-verify-code-img">
+                                        </div>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                        </div>
+                        <div class="buttons">
+                            <el-button type="danger" v-on:click="registerSubmit" plain>注册</el-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </el-main>
+        <el-footer style="box-sizing: border-box;height: 51px;padding-top: 15px;text-align: center;background: rgb(64, 158, 255);">
+            <a class="footer-link" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备15021049号</a>
+        </el-footer>
+    </el-container>
+</body>
+</html>

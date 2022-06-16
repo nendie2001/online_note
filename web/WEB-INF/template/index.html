@@ -1,0 +1,75 @@
+<html>
+<head>
+    <title>Bean</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Type" contect="text/html" ;charset=UTF-8">
+    <script src="/static/lib/vue.min.js"></script>
+    <script src="/static/lib/axios.min.js"></script>
+    <script src="/static/lib/jquery.min.js"></script>
+    <script src="/static/lib/gua.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="/static/css/index.css">
+    <!-- 引入组件库 -->
+    <script src="/static/lib/index.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script>
+        $(function () {
+            let app = new Vue({
+                "el": "#id-index-container",
+                data: {
+                    logoUrls: [
+                        "/static/img/logo.png",
+                        "/static/img/logo2.png",
+                        "/static/img/logo3.png",
+                    ]
+                },
+                methods: {
+                    jumpToBean: function () {
+                        log("jump To bean")
+                        window.location.href = "/bean"
+                    },
+                    toIndex: function () {
+                        log("to Index")
+                        window.location.href = "/"
+                    },
+                    toLogin: function () {
+                        window.location.href = "/user/login"
+                    },
+                }
+            })
+        })
+    </script>
+</head>
+<body style="margin: 0px;">
+<el-container id="id-index-container">
+
+    <el-aside style="width: 100%;">
+        <el-menu class="el-menu-demo"
+                 mode="horizontal"
+                 background-color="#409EFF"
+                 text-color="#fff"
+                 active-text-color="#ffd04b">
+            <el-menu-item index="1" @Click="toIndex">首页</el-menu-item>
+            <el-menu-item index="2" @Click="toLogin">登录</el-menu-item>
+        </el-menu>
+    </el-aside>
+    <el-main id="id-index-main">
+        <span style="margin-top: 30px;" class="slogen">Bean Writer</span>
+        <span class="slogen">轻量化的笔记环境</span>
+        <el-button style="margin-bottom: 50px;" class="slogen-button" type="primary" @Click="jumpToBean">记录想法</el-button>
+        <template>
+            <el-carousel height="200px" direction="horizontal" :autoplay="true">
+                <el-carousel-item v-for="url in logoUrls">
+                    <h3 class="medium">
+                        <img class="slogen-img" :src="url">
+                    </h3>
+                </el-carousel-item>
+            </el-carousel>
+        </template>
+    </el-main>
+    <el-footer style="box-sizing: border-box;height: 51px;padding-top: 15px;text-align: center;background: rgb(64, 158, 255);">
+        <a class="footer-link" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备15021049号</a>
+    </el-footer>
+</el-container>
+</body>
+</html>

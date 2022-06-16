@@ -1,0 +1,93 @@
+<html>
+<head>
+    <title>Bean</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Type" contect="text/html" ;charset=UTF-8">
+    <script src="/static/lib/sweetalert.min.js"></script>
+    <script src="/static/lib/component.js"></script>
+    <script src="/static/lib/vue.min.js"></script>
+    <script src="/static/lib/axios.min.js"></script>
+    <script src="/static/lib/jquery.min.js"></script>
+    <script src="/static/lib/gua.js"></script>
+    <script src="/static/js/bean.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="/static/css/index.css">
+    <!-- 引入组件库 -->
+    <script src="/static/lib/index.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<el-container>
+    <el-aside>
+    </el-aside>
+    <el-main id="id-bean-main">
+        <el-button @click="newBean" type="primary" style="width: 100%;">
+            新想法
+        </el-button>
+        <el-drawer
+                title="想法"
+                :visible.sync="drawer"
+                :direction="direction"
+                :before-close="handleClose">
+            <el-input
+                    type="textarea"
+                    :autosize="{ minRows: 25 }"
+                    placeholder="请输入内容"
+                    v-model="addBeanInput"
+                    @input="handleDrawInput"
+                    id="id-add-input">
+            </el-input>
+        </el-drawer>
+        <el-input
+                type="input"
+                placeholder="请输入内容"
+                v-model="inputBean"
+                @input="handleSearchInput"
+                class="input-block"
+        >
+        </el-input>
+        <el-empty description="暂无豆子" v-if="isEmpty"></el-empty>
+        <div class="bean-block">
+            <el-collapse v-model="activeNames" v-loading="loading" accordion>
+                <el-collapse-item class="bean-cell el-card is-hover-shadow" v-for="bean in beanList"
+                                  :key="bean.id" :title="bean.content.split('\n')[0]" :disabled="false" :name="bean.id">
+                    <template slot="title" class="edit-icon">
+                        <span style="flex: 1 0; order: 1;">{{bean.content.split('\n')[0].length > 8 ? bean.content.split('\n')[0].slice(0, 8) : bean.content.split('\n')[0]}}</span>
+                        <div style="order: 1;" @click="handleEditClick($event, bean.id, bean.content)">
+                            <el-button size="mini" type="primary" icon="el-icon-edit" circle></el-button>
+                        </div>
+                        <div style="order: 2; margin-left: 10px;" @click="handleDeleteClick($event, bean.id, bean.content)">
+                            <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
+                        </div>
+                    </template>
+                    <el-input
+                            type="textarea"
+                            :autosize="{ minRows: 2, maxRows: 8}"
+                            placeholder="请输入内容"
+                            v-model="bean.content"
+                            @input="handleBeanDrawerChange(bean.id, bean.content)"
+                            @blur.native.capture="handleBlur($event, bean.id, bean.content)">
+                    </el-input>
+                    <span class="textarea-time">{{timeFormator(bean.updatedTime)}}</span>
+                </el-collapse-item>
+            </el-collapse>
+        </div>
+        <div class="pagination-block">
+            <el-pagination
+                    background
+                    @current
+                    layout="prev, pager, next"
+                    :current-page.sync="currentPage"
+                    @current-change="handleCurrentChange"
+                    :page-size="pageSize"
+                    :pager-count="pagerCount"
+                    :total="totalBean"
+            >
+            </el-pagination>
+        </div>
+    </el-main>
+    <el-footer>
+    </el-footer>
+</el-container>
+</body>
+</html>

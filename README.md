@@ -1,4 +1,4 @@
-# online_dot
+# online_note
 ## 基于 Vue 和自制 Web 框架为后端的在线笔记
 - 主要功能
   - 笔记的的发布、修改、删除。
